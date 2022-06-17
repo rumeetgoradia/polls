@@ -1,3 +1,3 @@
-export const SITE_NAME = "TODO"
-export const SITE_URL = "https://www.TODO.com"
-export const SITE_DESCRIPTION = "TODO"
+export const SITE_NAME = "rgPolls"
+export const SITE_URL = "https://www.polls.rumeetgoradia.com"
+export const SITE_DESCRIPTION = "Polls! By Rumeet Goradia."
