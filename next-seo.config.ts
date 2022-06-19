@@ -1,5 +1,5 @@
-import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/constants"
-import { NextSeoProps } from "next-seo"
+import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/constants/seo";
+import { NextSeoProps } from "next-seo";
 
 const SeoProps: NextSeoProps = {
 	defaultTitle: SITE_NAME,
@@ -26,6 +26,6 @@ const SeoProps: NextSeoProps = {
 		cardType: "summary_large_image",
 		site: SITE_NAME,
 	},
-}
+};
 
-export default SeoProps
+export default SeoProps;

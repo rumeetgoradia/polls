@@ -73,7 +73,7 @@ model Question {
   createdAt DateTime  @default(now())
   endsAt    DateTime?
 
-  question String
+  question String   @db.VarChar(600)
   options  Option[]
 
   User   User   @relation(fields: [userId], references: [id])
@@ -83,9 +83,11 @@ model Question {
 model Option {
   id String @id @default(cuid())
 
+  option String @db.VarChar(600)
+  votes  Vote[]
+
   question   Question @relation(fields: [questionId], references: [id])
   questionId String
-  votes      Vote[]
 }
 
 model Vote {

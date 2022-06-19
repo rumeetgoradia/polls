@@ -1,23 +1,27 @@
-import { AppRouter } from "@/backend/router"
-import { Chakra } from "@/components/Chakra"
-import theme, { Fonts } from "@/styles/theme"
-import { withTRPC } from "@trpc/next"
-import { DefaultSeo } from "next-seo"
-import SeoProps from "next-seo.config"
-import { AppType } from "next/dist/shared/lib/utils"
-import superjson from "superjson"
+import { AppRouter } from "@/backend/router";
+import { Chakra } from "@/components/Chakra";
+import theme, { Fonts } from "@/styles/theme";
+import { withTRPC } from "@trpc/next";
+import { SessionProvider } from "next-auth/react";
+import { DefaultSeo } from "next-seo";
+import SeoProps from "next-seo.config";
+import { AppType } from "next/dist/shared/lib/utils";
+import superjson from "superjson";
 
-const MyApp: AppType = ({ Component, pageProps }) => {
+const MyApp: AppType = ({
+	Component,
+	pageProps: { session, ...pageProps },
+}) => {
 	return (
-		<>
+		<SessionProvider session={session}>
 			<DefaultSeo {...SeoProps} />
 			<Chakra cookies={pageProps.cookies} theme={theme}>
 				<Fonts />
 				<Component {...pageProps} />
 			</Chakra>
-		</>
-	)
-}
+		</SessionProvider>
+	);
+};
 
 export default withTRPC<AppRouter>({
 	config({ ctx }) {
@@ -27,7 +31,7 @@ export default withTRPC<AppRouter>({
 		 */
 		const url = process.env.VERCEL_URL
 			? `https://${process.env.VERCEL_URL}/api/trpc`
-			: "http://localhost:3000/api/trpc"
+			: "http://localhost:3000/api/trpc";
 
 		return {
 			url,
@@ -36,12 +40,12 @@ export default withTRPC<AppRouter>({
 			 * @link https://react-query.tanstack.com/reference/QueryClient
 			 */
 			// queryClientConfig: { defaultOptions: { queries: { staleTime: 60 } } },
-		}
+		};
 	},
 	/**
 	 * @link https://trpc.io/docs/ssr
 	 */
 	ssr: true,
-})(MyApp)
+})(MyApp);
 
-export { getServerSideProps } from "@/components/Chakra"
+export { getServerSideProps } from "@/components/Chakra";
