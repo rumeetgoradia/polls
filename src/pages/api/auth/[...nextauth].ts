@@ -19,29 +19,24 @@ export default NextAuth({
 			name: "Anonymous",
 			credentials: {},
 			async authorize() {
-				const { id } = await prisma.user.create({
+				const user = await prisma.user.create({
 					data: {
 						id: nanoid(),
 						name: "guest",
 					},
 				});
 				return {
-					id,
+					...user,
 				};
 			},
 		}),
 	],
 	callbacks: {
 		async session({ session, token }) {
-			console.log(session, token);
 			return {
 				...session,
 				isLoggedIn: token.sub !== undefined,
-				user: {
-					...session.user,
-					id: token.sub,
-					name: "guest",
-				},
+				token,
 			};
 		},
 	},
