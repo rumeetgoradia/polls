@@ -1,17 +1,17 @@
+import { trpc } from "@/utils/trpc";
 import type { NextPage } from "next";
-import { signIn, useSession } from "next-auth/react";
-import { useEffect } from "react";
 
 const HomePage: NextPage = () => {
-	const { status, data } = useSession();
+	const { data, isLoading } = trpc.useQuery(["questions.get-all"]);
 
-	useEffect(() => {
-		if (status === "unauthenticated") {
-			signIn("anon", { redirect: false });
-		}
-	}, [status]);
-
-	return <>{data?.user?.name}</>;
+	return (
+		<>
+			<h1>Questions</h1>
+			{data?.map((q) => (
+				<div key={q.question}>q.question</div>
+			))}
+		</>
+	);
 };
 
 export default HomePage;

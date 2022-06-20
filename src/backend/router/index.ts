@@ -1,11 +1,10 @@
-import * as trpc from "@trpc/server"
-import superjson from "superjson"
-import { questionsRouter } from "./questions"
+import { createRouter } from "@/backend/router/context";
+import superjson from "superjson";
+import { questionsRouter } from "./questions";
 
-export const appRouter = trpc
-	.router()
+export const appRouter = createRouter()
 	.transformer(superjson)
-	.merge("questions.", questionsRouter)
+	.merge("questions.", questionsRouter);
 
 // export type definition of API
-export type AppRouter = typeof appRouter
+export type AppRouter = typeof appRouter;

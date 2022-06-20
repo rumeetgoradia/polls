@@ -33,10 +33,11 @@ export default NextAuth({
 	],
 	callbacks: {
 		async session({ session, token }) {
+			const user = { ...session.user, id: token.sub };
+			const updatedSession = { ...session, user };
 			return {
-				...session,
-				isLoggedIn: token.sub !== undefined,
-				token,
+				...updatedSession,
+				isGuest: token.name === "guest",
 			};
 		},
 	},

@@ -1,4 +1,5 @@
 import { AppRouter } from "@/backend/router";
+import { AnonymousSessionProvider } from "@/components/AnonymousSessionProvider";
 import { Chakra } from "@/components/Chakra";
 import theme, { Fonts } from "@/styles/theme";
 import { withTRPC } from "@trpc/next";
@@ -14,11 +15,13 @@ const MyApp: AppType = ({
 }) => {
 	return (
 		<SessionProvider session={session}>
-			<DefaultSeo {...SeoProps} />
-			<Chakra cookies={pageProps.cookies} theme={theme}>
-				<Fonts />
-				<Component {...pageProps} />
-			</Chakra>
+			<AnonymousSessionProvider>
+				<DefaultSeo {...SeoProps} />
+				<Chakra cookies={pageProps.cookies} theme={theme}>
+					<Fonts />
+					<Component {...pageProps} />
+				</Chakra>
+			</AnonymousSessionProvider>
 		</SessionProvider>
 	);
 };
