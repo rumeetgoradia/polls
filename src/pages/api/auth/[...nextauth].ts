@@ -1,7 +1,7 @@
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { PrismaClient } from "@prisma/client";
 import { nanoid } from "nanoid";
-import NextAuth from "next-auth";
+import NextAuth, { User } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GitHubProvider from "next-auth/providers/github";
 
@@ -33,11 +33,11 @@ export default NextAuth({
 	],
 	callbacks: {
 		async session({ session, token }) {
-			const user = { ...session.user, id: token.sub };
-			const updatedSession = { ...session, user };
+			const user: User = { ...session.user, id: token.sub! };
 			return {
-				...updatedSession,
-				isGuest: token.name === "guest",
+				...session,
+				user,
+				isGuest: user.name === "guest",
 			};
 		},
 	},

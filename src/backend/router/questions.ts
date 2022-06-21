@@ -5,7 +5,11 @@ import { z } from "zod";
 
 export const questionsRouter = createRouter()
 	.query("get-all", {
-		async resolve({ input }) {
+		async resolve({ ctx }) {
+			if (!ctx.token) {
+				return [];
+			}
+
 			return await prisma.question.findMany();
 		},
 	})

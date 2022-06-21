@@ -7,7 +7,7 @@ export async function createContext(opts?: trpcNext.CreateNextContextOptions) {
 	const session = await getSession({ req: opts?.req });
 	console.log("session?", session);
 
-	return { token: session?.user?.id };
+	return { token: session?.user?.id, req: opts?.req };
 }
 type Context = trpc.inferAsyncReturnType<typeof createContext>;
 
