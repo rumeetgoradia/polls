@@ -72,11 +72,12 @@ model Question {
   id        String    @id @default(cuid())
   createdAt DateTime  @default(now())
   endsAt    DateTime?
+  isPublic  Boolean
 
   question String   @db.VarChar(600)
   options  Option[]
 
-  User   User   @relation(fields: [userId], references: [id])
+  User   User   @relation(fields: [userId], references: [id], onDelete: SetNull)
   userId String
 
   @@index([userId])
@@ -88,15 +89,15 @@ model Option {
   option String @db.VarChar(600)
   votes  Vote[]
 
-  question   Question @relation(fields: [questionId], references: [id])
+  question   Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
   questionId String
 }
 
 model Vote {
   id String @id @default(cuid())
 
-  option   Option @relation(fields: [optionId], references: [id])
+  option   Option @relation(fields: [optionId], references: [id], onDelete: Cascade)
   optionId String
-  user     User   @relation(fields: [userId], references: [id])
+  user     User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId   String
 }

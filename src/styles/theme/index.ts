@@ -1,8 +1,8 @@
-import { extendTheme } from "@chakra-ui/react"
-import { StyleFunctionProps } from "@chakra-ui/theme-tools"
+import { extendTheme } from "@chakra-ui/react";
+import { StyleFunctionProps } from "@chakra-ui/theme-tools";
 
 const fonts = [
-	"~~",
+	"Inter",
 	"ui-sans-serif",
 	"system-ui",
 	"-apple-system",
@@ -17,7 +17,7 @@ const fonts = [
 	"Segoe UI Emoji",
 	"Segoe UI Symbol",
 	"Noto Color Emoji",
-].join(",")
+].join(",");
 
 const theme = extendTheme({
 	styles: {
@@ -39,8 +39,8 @@ const theme = extendTheme({
 		initialColorMode: "light",
 		useSystemColorMode: false,
 	},
-})
+});
 
-export default theme
+export default theme;
 
-export { default as Fonts } from "./fonts"
+export { default as Fonts } from "./fonts";

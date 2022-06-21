@@ -5,7 +5,6 @@ import { getSession } from "next-auth/react";
 // The app's context - is generated for each incoming request
 export async function createContext(opts?: trpcNext.CreateNextContextOptions) {
 	const session = await getSession({ req: opts?.req });
-	console.log("session?", session);
 
 	return { token: session?.user?.id, req: opts?.req };
 }
