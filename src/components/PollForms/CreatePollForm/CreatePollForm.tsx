@@ -44,7 +44,7 @@ const ActionButtons: React.FC<{ isLoading: boolean }> = ({ isLoading }) => {
 	return (
 		<Flex justify="end">
 			<Button type="submit" isLoading={isLoading}>
-				Create Poll
+				Create poll
 			</Button>
 		</Flex>
 	);

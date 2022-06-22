@@ -90,11 +90,11 @@ const BasePollForm: React.FC<BasePollFormProps> = ({
 					<FormLabel htmlFor="title">Title</FormLabel>
 					<Input type="text" {...register("title")} />
 					<FormErrorMessage
-						color="error.800"
+						color="error.600"
 						pt={2}
 						mt={0}
 						borderTop="2px"
-						borderTopColor="error.800"
+						borderTopColor="error.600"
 					>
 						{errors.title?.message}
 					</FormErrorMessage>
@@ -107,11 +107,11 @@ const BasePollForm: React.FC<BasePollFormProps> = ({
 					</FormLabel>
 					<Textarea rows={8} {...register("description")} />
 					<FormErrorMessage
-						color="error.800"
+						color="error.600"
 						pt={2}
 						mt={0}
 						borderTop="2px"
-						borderTopColor="error.800"
+						borderTopColor="error.600"
 					>
 						{errors.description?.message}
 					</FormErrorMessage>
@@ -150,20 +150,21 @@ const BasePollForm: React.FC<BasePollFormProps> = ({
 							</Box>
 						))}
 						<Flex justify="space-between" align="center" w="full">
-							<Text opacity={0.65} fontSize="sm">
-								{optionFields.length} options
-							</Text>
 							<Button
 								onClick={() => append({ title: "" })}
 								leftIcon={<AiOutlinePlus />}
+								colorScheme="grayAlpha"
 							>
 								Add option
 							</Button>
+							<Text opacity={0.65} fontSize="sm" ml={2}>
+								{optionFields.length} options
+							</Text>
 						</Flex>
 					</VStack>
 				</FormControl>
 			</GridItem>
-			<GridItem colSpan={1}>
+			<GridItem colSpan={{ base: 2, sm: 1 }}>
 				<FormControl display="flex" justifyContent="space-between">
 					<Box>
 						<FormLabel htmlFor="isPublic" mb="0">
@@ -173,10 +174,10 @@ const BasePollForm: React.FC<BasePollFormProps> = ({
 							Your poll is visible to everyone.
 						</Text>
 					</Box>
-					<Switch {...register("isPublic")} />
+					<Switch colorScheme="brandAlpha" {...register("isPublic")} />
 				</FormControl>
 			</GridItem>
-			<GridItem colSpan={1}>
+			<GridItem colSpan={{ base: 2, sm: 1 }}>
 				<FormControl isInvalid={!!errors.endsAt}>
 					<FormLabel htmlFor="endsAt">
 						End Date <OptionalMarker />
@@ -184,20 +185,16 @@ const BasePollForm: React.FC<BasePollFormProps> = ({
 					<Input
 						type="datetime-local"
 						{...register("endsAt", {
-							setValueAs: (val: string) =>
-								!val.length
-									? undefined
-									: isValidDateString(val)
-									? new Date(val)
-									: null,
+							setValueAs: (val) =>
+								isValidDateString(val) ? new Date(val) : undefined,
 						})}
 					/>
 					<FormErrorMessage
-						color="error.800"
+						color="error.600"
 						pt={2}
 						mt={0}
 						borderTop="2px"
-						borderTopColor="error.800"
+						borderTopColor="error.600"
 					>
 						{errors.endsAt?.message}
 					</FormErrorMessage>
@@ -222,20 +219,20 @@ const OptionalMarker: React.FC = () => {
 };
 
 const OptionsErrorBox: React.FC = () => {
-	const backgroundColor = fade(useColor("error.200"), 0.25);
+	const backgroundColor = fade(useColor("error.200"), 0.15);
 
 	return (
 		<Flex
 			p={4}
 			align="center"
 			border="2px"
-			borderColor="error.800"
+			borderColor="error.600"
 			backgroundColor={backgroundColor}
 		>
-			<Box pr={2} color="error.800" fontSize="lg">
+			<Box pr={2} color="error.600" fontSize="xl">
 				<RiErrorWarningFill />
 			</Box>
-			<Text as="span" fontSize="sm">
+			<Text as="span" fontSize="sm" fontWeight={500}>
 				Please enter at least 2 valid options for your poll.
 			</Text>
 		</Flex>

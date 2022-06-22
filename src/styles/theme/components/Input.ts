@@ -10,14 +10,11 @@ export const Input: ComponentStyleConfig = {
 		base: {
 			field: {
 				borderRadius: 0,
-				position: "relative",
-				zIndex: 10,
-				background: "gray.200",
+				background: "gray.800",
 				"&[aria-invalid=true], &[data-invalid]": {
-					color: "error.800",
-					borderBottomColor: "error.800",
+					color: "error.600",
 					_focus: {
-						color: "black",
+						color: "white",
 					},
 				},
 			},
