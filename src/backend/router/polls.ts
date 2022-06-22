@@ -1,12 +1,13 @@
 import { createRouter } from "@/backend/router/context";
 import { prisma } from "@/db/prisma";
+import { pollFieldsValidator } from "@/utils/validator";
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 
-export const questionsRouter = createRouter()
+export const pollsRouter = createRouter()
 	.query("get-all-public", {
 		async resolve() {
-			return await prisma.question.findMany({
+			return await prisma.poll.findMany({
 				where: {
 					isPublic: {
 						equals: true,
@@ -24,7 +25,7 @@ export const questionsRouter = createRouter()
 				return [];
 			}
 
-			return await prisma.question.findMany({
+			return await prisma.poll.findMany({
 				where: {
 					userId: ctx.token,
 				},
@@ -34,21 +35,34 @@ export const questionsRouter = createRouter()
 			});
 		},
 	})
-	.mutation("create", {
+	.query("get-by-id", {
 		input: z.object({
-			question: z.string().min(5).max(600),
-			isPublic: z.boolean(),
+			id: z.string(),
 		}),
+		async resolve({ input }) {
+			return await prisma.poll.findUnique({
+				where: {
+					id: input.id,
+				},
+			});
+		},
+	})
+	.mutation("create", {
+		input: pollFieldsValidator,
 		async resolve({ input, ctx }) {
 			if (!ctx.token) {
 				throw new TRPCError({ code: "UNAUTHORIZED" });
 			}
 
-			return await prisma.question.create({
+			return await prisma.poll.create({
 				data: {
-					question: input.question,
+					...input,
+					options: {
+						createMany: {
+							data: [...input.options],
+						},
+					},
 					userId: ctx.token,
-					isPublic: input.isPublic,
 				},
 			});
 		},

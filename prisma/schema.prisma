@@ -62,20 +62,22 @@ model User {
   accounts      Account[]
   sessions      Session[]
 
-  questions Question[]
+  polls Poll[]
 
   votes Vote[]
   @@map(name: "users")
 }
 
-model Question {
-  id        String    @id @default(cuid())
-  createdAt DateTime  @default(now())
-  endsAt    DateTime?
-  isPublic  Boolean
+model Poll {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  editedAt  DateTime @default(now())
 
-  question String   @db.VarChar(600)
-  options  Option[]
+  title       String    @db.VarChar(600)
+  description String?   @db.VarChar(5000)
+  options     Option[]
+  isPublic    Boolean
+  endsAt      DateTime?
 
   User   User   @relation(fields: [userId], references: [id], onDelete: SetNull)
   userId String
@@ -86,11 +88,11 @@ model Question {
 model Option {
   id String @id @default(cuid())
 
-  option String @db.VarChar(600)
-  votes  Vote[]
+  title String @db.VarChar(600)
+  votes Vote[]
 
-  question   Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
-  questionId String
+  poll   Poll   @relation(fields: [pollId], references: [id], onDelete: Cascade)
+  pollId String
 }
 
 model Vote {
