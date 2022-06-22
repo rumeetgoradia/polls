@@ -23,26 +23,45 @@ export const pollFieldsValidator = z.object({
 	isPublic: z.boolean(),
 	endsAt: z
 		.date()
-		.nullable()
 		.superRefine((val, ctx) => {
-			if (val === null) {
+			if (new Date().getTime() >= new Date(val).getTime()) {
 				ctx.addIssue({
-					code: z.ZodIssueCode.invalid_date,
-					message: "Your poll's end date isn't a valid date.",
-				});
-			}
-
-			if (val && new Date().getTime() >= val.getTime()) {
-				ctx.addIssue({
-					code: z.ZodIssueCode.too_small,
-					minimum: new Date().getTime(),
-					inclusive: false,
-					type: "string",
+					code: z.ZodIssueCode.custom,
 					message: "Your poll's end date can't be in the past.",
 				});
 			}
 		})
 		.optional(),
+	// endsAt: z.preprocess(
+	// 	(arg) => {
+	// 		console.log(arg);
+
+	// 		if (typeof arg == "string") {
+	// 			if (!arg.length) {
+	// 				return undefined;
+	// 			} else if (isValidDateString(arg)) {
+	// 				return new Date(arg);
+	// 			}
+	// 		}
+
+	// 		if (arg instanceof Date) {
+	// 			return arg;
+	// 		}
+
+	// 		if (arg) {
+	// 			return null;
+	// 		}
+	// 		// if (typeof arg == "string" || arg instanceof Date) return new Date(arg);
+	// 	},
+	// 	z.date().optional(),
+	// 	{ invalid_type_error: "Your poll's end date isn't a valid date." }
+	// ),
+	// .string()._parse()
+	// .nullable()
+	// .refine((val) => {
+	// 	return val && new Date().getTime() >= val.getTime();
+	// }, "Your poll's end date can't be in the past.")
+	// .optional(),
 });
 
 export type CreatePollFields = z.infer<typeof pollFieldsValidator>;
