@@ -39,10 +39,6 @@ const theme = extendTheme({
 		body: fonts,
 	},
 
-	config: {
-		initialColorMode: "dark",
-	},
-
 	colors,
 
 	components,
