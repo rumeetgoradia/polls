@@ -1,5 +1,6 @@
+import { Layout } from "@/components/Layout";
 import { trpc } from "@/utils/trpc";
-import { Container, Heading } from "@chakra-ui/react";
+import { Heading } from "@chakra-ui/react";
 import type { NextPage } from "next";
 import Link from "next/link";
 
@@ -12,7 +13,7 @@ const HomePage: NextPage = () => {
 	);
 
 	return (
-		<Container maxW="container.md">
+		<Layout>
 			<Heading as="h1">Your Polls</Heading>
 			{ownedPolls?.map((poll) => (
 				<Link href={`/polls/${poll.id}`} key={`owned-${poll.id}`}>
@@ -25,7 +26,7 @@ const HomePage: NextPage = () => {
 					{poll.title}
 				</Link>
 			))}
-		</Container>
+		</Layout>
 	);
 };
 
