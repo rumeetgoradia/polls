@@ -32,16 +32,19 @@ export const SessionContextProvider: React.FC<{
 
 	const { mutate } = trpc.useMutation("users.merge-guest-account");
 
+	// On initial load, get the guest ID from local storage.
 	useEffect(() => {
 		setGuestId(JSON.parse(window.localStorage.getItem(LOCAL_STORAGE_KEY)!));
 	}, []);
 
+	// If the user is not logged in and there is no guest ID saved, create an anonymous session.
 	useEffect(() => {
-		if (status === "unauthenticated") {
+		if (status === "unauthenticated" && !guestId) {
 			signIn("anon", { redirect: false });
 		}
-	}, [status]);
+	}, [status, guestId]);
 
+	// Merge the anonymous account and actual account upon logging in.
 	useEffect(() => {
 		if (status === "authenticated" && session && !session.isGuest && guestId) {
 			mutate(
@@ -55,6 +58,7 @@ export const SessionContextProvider: React.FC<{
 		}
 	}, [status, session, guestId, mutate]);
 
+	// Save the guest ID to local storage, because signIn causes page refresh (redirect) and we lose guest ID.
 	const setGuestIdAndSignIn = async (guestId?: string) => {
 		window.localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(guestId));
 		setGuestId(guestId);
