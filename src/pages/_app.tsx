@@ -1,6 +1,8 @@
 import { AppRouter } from "@/backend/router";
-import { AnonymousSessionProvider } from "@/components/AnonymousSessionProvider";
 import { Chakra } from "@/components/Chakra";
+import { Footer } from "@/components/Footer";
+import { Navbar } from "@/components/Navbar";
+import { SessionContextProvider } from "@/context/session";
 import theme, { Fonts } from "@/styles/theme";
 import { withTRPC } from "@trpc/next";
 import { SessionProvider } from "next-auth/react";
@@ -15,13 +17,15 @@ const MyApp: AppType = ({
 }) => {
 	return (
 		<SessionProvider session={session}>
-			<AnonymousSessionProvider>
+			<SessionContextProvider>
 				<DefaultSeo {...SeoProps} />
 				<Chakra cookies={pageProps.cookies} theme={theme}>
 					<Fonts />
+					<Navbar />
 					<Component {...pageProps} />
+					<Footer />
 				</Chakra>
-			</AnonymousSessionProvider>
+			</SessionContextProvider>
 		</SessionProvider>
 	);
 };

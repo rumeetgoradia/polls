@@ -143,6 +143,7 @@ const BasePollForm: React.FC<BasePollFormProps> = ({
 												aria-label={`Remove option ${index}`}
 												bg="transparent !important"
 												tabIndex={-1}
+												border="none"
 											/>
 										</InputRightElement>
 									)}
