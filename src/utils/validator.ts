@@ -21,6 +21,8 @@ export const pollFieldsValidator = z.object({
 		})
 	),
 	isPublic: z.boolean(),
+	isMultipleSelection: z.boolean(),
+	resultsVisibility: z.enum(["OWNER", "VOTER", "PUBLIC"]),
 	endsAt: z
 		.date()
 		.superRefine((val, ctx) => {

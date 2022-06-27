@@ -73,16 +73,24 @@ model Poll {
   createdAt DateTime @default(now())
   editedAt  DateTime @default(now())
 
-  title       String    @db.VarChar(600)
-  description String?   @db.VarChar(5000)
-  options     Option[]
-  isPublic    Boolean
-  endsAt      DateTime?
+  title               String            @db.VarChar(600)
+  description         String?           @db.VarChar(5000)
+  options             Option[]
+  isPublic            Boolean           @default(false)
+  isMultipleSelection Boolean           @default(false)
+  resultsVisibility   ResultsVisibility @default(PUBLIC)
+  endsAt              DateTime?
 
   User   User   @relation(fields: [userId], references: [id], onDelete: SetNull)
   userId String
 
   @@index([userId])
+}
+
+enum ResultsVisibility {
+  PUBLIC
+  VOTER
+  OWNER
 }
 
 model Option {

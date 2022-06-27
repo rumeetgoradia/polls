@@ -14,6 +14,7 @@ import {
 	Input,
 	InputGroup,
 	InputRightElement,
+	Select,
 	Switch,
 	Text,
 	Textarea,
@@ -89,15 +90,7 @@ const BasePollForm: React.FC<BasePollFormProps> = ({
 				<FormControl isInvalid={!!errors.title}>
 					<FormLabel htmlFor="title">Title</FormLabel>
 					<Input type="text" {...register("title")} />
-					<FormErrorMessage
-						color="error.600"
-						pt={2}
-						mt={0}
-						borderTop="2px"
-						borderTopColor="error.600"
-					>
-						{errors.title?.message}
-					</FormErrorMessage>
+					<ErrorMessage message={errors.title?.message} />
 				</FormControl>
 			</GridItem>
 			<GridItem colSpan={2}>
@@ -106,15 +99,7 @@ const BasePollForm: React.FC<BasePollFormProps> = ({
 						Description <OptionalMarker />
 					</FormLabel>
 					<Textarea rows={8} {...register("description")} />
-					<FormErrorMessage
-						color="error.600"
-						pt={2}
-						mt={0}
-						borderTop="2px"
-						borderTopColor="error.600"
-					>
-						{errors.description?.message}
-					</FormErrorMessage>
+					<ErrorMessage message={errors.description?.message} />
 				</FormControl>
 			</GridItem>
 			<GridItem colSpan={2}>
@@ -172,16 +157,39 @@ const BasePollForm: React.FC<BasePollFormProps> = ({
 							Public
 						</FormLabel>
 						<Text fontSize="sm" opacity={0.65}>
-							Your poll is visible to everyone.
+							Anyone can see and vote on your poll.
 						</Text>
 					</Box>
 					<Switch colorScheme="brandAlpha" {...register("isPublic")} />
 				</FormControl>
 			</GridItem>
 			<GridItem colSpan={{ base: 2, sm: 1 }}>
+				<FormControl display="flex" justifyContent="space-between">
+					<Box>
+						<FormLabel htmlFor="isMultipleSelection" mb="0">
+							Allow multiple choice selections
+						</FormLabel>
+					</Box>
+					<Switch
+						colorScheme="brandAlpha"
+						{...register("isMultipleSelection")}
+					/>
+				</FormControl>
+			</GridItem>
+			<GridItem colSpan={{ base: 2, sm: 1 }}>
+				<FormControl>
+					<FormLabel htmlFor="resultsVisibility">Results visibility</FormLabel>
+					<Select defaultValue="PUBLIC" {...register("resultsVisibility")}>
+						<option value="PUBLIC">Visible to everyone</option>
+						<option value="VOTER">Visible to voters and you</option>
+						<option value="OWNER">Visible to only you</option>
+					</Select>
+				</FormControl>
+			</GridItem>
+			<GridItem colSpan={{ base: 2, sm: 1 }}>
 				<FormControl isInvalid={!!errors.endsAt}>
 					<FormLabel htmlFor="endsAt">
-						End Date <OptionalMarker />
+						End date <OptionalMarker />
 					</FormLabel>
 					<Input
 						type="datetime-local"
@@ -190,15 +198,7 @@ const BasePollForm: React.FC<BasePollFormProps> = ({
 								isValidDateString(val) ? new Date(val) : undefined,
 						})}
 					/>
-					<FormErrorMessage
-						color="error.600"
-						pt={2}
-						mt={0}
-						borderTop="2px"
-						borderTopColor="error.600"
-					>
-						{errors.endsAt?.message}
-					</FormErrorMessage>
+					<ErrorMessage message={errors.endsAt?.message} />
 				</FormControl>
 			</GridItem>
 			{hasEnoughOptions === false && (
@@ -237,6 +237,20 @@ const OptionsErrorBox: React.FC = () => {
 				Please enter at least 2 valid options for your poll.
 			</Text>
 		</Flex>
+	);
+};
+
+const ErrorMessage: React.FC<{ message?: string }> = ({ message }) => {
+	return (
+		<FormErrorMessage
+			color="error.600"
+			pt={2}
+			mt={0}
+			borderTop="2px"
+			borderTopColor="error.600"
+		>
+			{message}
+		</FormErrorMessage>
 	);
 };
 
