@@ -14,6 +14,17 @@ export const Button: ComponentStyleConfig = {
 			border: "1px",
 			borderColor: "black",
 		},
+		invertedSolid: {
+			backgroundColor: "whiteAlpha.800",
+			color: "brand.900",
+			borderRadius: 0,
+			_hover: {
+				backgroundColor: "white",
+			},
+			_focusVisible: {
+				backgroundColor: "white",
+			},
+		},
 		link: {
 			color: "white",
 			textDecoration: "none !important",

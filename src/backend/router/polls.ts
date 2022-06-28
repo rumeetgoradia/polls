@@ -13,6 +13,13 @@ export const pollsRouter = createRouter()
 						equals: true,
 					},
 				},
+				include: {
+					User: {
+						select: {
+							name: true,
+						},
+					},
+				},
 				orderBy: {
 					createdAt: "desc",
 				},
@@ -43,6 +50,24 @@ export const pollsRouter = createRouter()
 			return await prisma.poll.findUnique({
 				where: {
 					id: input.id,
+				},
+			});
+		},
+	})
+	.query("get-by-title", {
+		input: z.object({
+			query: z.string(),
+		}),
+		async resolve({ input }) {
+			return await prisma.poll.findMany({
+				where: {
+					title: {
+						startsWith: input.query,
+						contains: input.query,
+					},
+				},
+				orderBy: {
+					createdAt: "desc",
 				},
 			});
 		},

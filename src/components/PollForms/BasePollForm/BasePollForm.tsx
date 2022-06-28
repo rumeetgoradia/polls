@@ -84,7 +84,9 @@ const BasePollForm: React.FC<BasePollFormProps> = ({
 			templateColumns="repeat(2, 1fr)"
 		>
 			<GridItem colSpan={2}>
-				<Heading as="h1">{title}</Heading>
+				<Heading as="h1" fontWeight={600}>
+					{title}
+				</Heading>
 			</GridItem>
 			<GridItem colSpan={2}>
 				<FormControl isInvalid={!!errors.title}>
