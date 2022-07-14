@@ -1,6 +1,7 @@
 import { CopiedToast } from "@/components/PollPage/atoms/CopiedToast";
 import { COPIED_TOAST_ID } from "@/components/PollPage/atoms/CopiedToast/CopiedToast";
 import { Button, useToast } from "@chakra-ui/react";
+import { useEffect, useState } from "react";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { BsShare } from "react-icons/bs";
 type ShareButtonProps = {
@@ -9,6 +10,12 @@ type ShareButtonProps = {
 };
 
 const ShareButton: React.FC<ShareButtonProps> = ({ pollId, colorScheme }) => {
+	const [baseUrl, setBaseUrl] = useState<string>();
+
+	useEffect(() => {
+		setBaseUrl(getBaseUrl());
+	}, []);
+
 	const toast = useToast();
 
 	function getBaseUrl() {
@@ -23,7 +30,7 @@ const ShareButton: React.FC<ShareButtonProps> = ({ pollId, colorScheme }) => {
 
 	return (
 		<CopyToClipboard
-			text={`${getBaseUrl()}/polls/${pollId}`}
+			text={`${baseUrl}/polls/${pollId}`}
 			onCopy={() => {
 				if (!toast.isActive(COPIED_TOAST_ID)) {
 					toast({
