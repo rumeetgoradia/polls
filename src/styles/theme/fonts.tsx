@@ -1,15 +1,15 @@
-import { Global } from "@emotion/react"
+import { Global } from "@emotion/react";
 const Fonts = () => (
 	<Global
 		styles={`
         @font-face {
-            font-family: 'TODO';
-            src: url('/fonts/TODO.woff2') format('woff2');
-            font-weight: TODO;
+            font-family: 'Inter';
+            src: url('/fonts/inter.woff2') format('woff2');
+            font-weight: 100 900;
             font-display: optional;
             font-style: normal;
         }
         `}
 	/>
-)
-export default Fonts
+);
+export default Fonts;

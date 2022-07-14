@@ -1,4 +1,4 @@
-import Document, { Head, Html, Main, NextScript } from "next/document"
+import Document, { Head, Html, Main, NextScript } from "next/document";
 
 class MyDocument extends Document {
 	render() {
@@ -7,7 +7,7 @@ class MyDocument extends Document {
 				<Head>
 					<link
 						rel="preload"
-						href="/fonts/TODO.woff2"
+						href="/fonts/inter.woff2"
 						as="font"
 						type="font/woff2"
 						crossOrigin="anonymous"
@@ -19,8 +19,8 @@ class MyDocument extends Document {
 					<NextScript />
 				</body>
 			</Html>
-		)
+		);
 	}
 }
 
-export default MyDocument
+export default MyDocument;
