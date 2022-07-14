@@ -1,4 +1,5 @@
 import { SessionContext } from "@/context/session";
+import { getApproximateTimeBetween } from "@/utils/date";
 import { createTransition } from "@/utils/transition";
 import { Box, Flex, Text } from "@chakra-ui/react";
 import Link from "next/link";
@@ -40,12 +41,25 @@ const PollPreview: React.FC<PollPreviewProps> = ({ poll }) => {
 					{poll.title}
 				</Text>
 				<Flex flexDirection="column" align="flex-end" mt={2} w="full">
-					<Text fontSize="sm" textAlign="right" opacity={0.65} maxW="200px">
-						created by {isOwned ? <strong>You</strong> : poll.User.name}
+					<Text fontSize="sm" textAlign="right" opacity={0.65} pl={4}>
+						by{" "}
+						{isOwned ? (
+							<Box
+								as="strong"
+								fontSize="xs"
+								textTransform="uppercase"
+								fontWeight={900}
+							>
+								You
+							</Box>
+						) : (
+							poll.User.name
+						)}{" "}
+						&middot; {getApproximateTimeBetween(poll.createdAt)} ago
 					</Text>
-					<Text fontSize="sm" textAlign="right" opacity={0.65}>
-						{poll.createdAt.toLocaleString()}
-					</Text>
+					{/* <Text fontSize="sm" textAlign="right" opacity={0.65}>
+						{getApproximateTimeBetween(poll.createdAt)} ago
+					</Text> */}
 				</Flex>
 			</Box>
 		</Link>

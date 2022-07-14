@@ -21,7 +21,7 @@ const HomePage: NextPage = () => {
 
 	return (
 		<Layout>
-			<VStack align="flex-start" spacing={10}>
+			<VStack align="flex-start" spacing={8}>
 				<Box w="full" bg="brandAlpha.300" position="relative" overflow="hidden">
 					<VStack
 						w="full"

@@ -5,3 +5,10 @@ export type PollWithUser = Poll & {
 		name: string | null;
 	};
 };
+
+export type PollWithUserAndOptions = PollWithUser & {
+	options: {
+		title: string;
+		id: string;
+	}[];
+};

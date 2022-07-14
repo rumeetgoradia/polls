@@ -1,4 +1,4 @@
-import { useColor } from "@/hooks/useColor";
+import { ErrorBox } from "@/components/ErrorBox";
 import { CreatePollFields, isValidDateString } from "@/utils/validator";
 import {
 	Box,
@@ -20,11 +20,9 @@ import {
 	Textarea,
 	VStack,
 } from "@chakra-ui/react";
-import fade from "color-alpha";
 import { useState } from "react";
 import { SubmitHandler, useFieldArray, UseFormReturn } from "react-hook-form";
 import { AiOutlinePlus } from "react-icons/ai";
-import { RiErrorWarningFill } from "react-icons/ri";
 
 type BasePollFormProps = {
 	title: string;
@@ -205,7 +203,7 @@ const BasePollForm: React.FC<BasePollFormProps> = ({
 			</GridItem>
 			{hasEnoughOptions === false && (
 				<GridItem colSpan={2}>
-					<OptionsErrorBox />
+					<ErrorBox error="Please enter at least 2 valid options for your poll." />
 				</GridItem>
 			)}
 			<GridItem colSpan={2}>{actionButtons}</GridItem>
@@ -218,27 +216,6 @@ const OptionalMarker: React.FC = () => {
 		<Text as="span" fontSize="sm" opacity={0.65}>
 			(optional)
 		</Text>
-	);
-};
-
-const OptionsErrorBox: React.FC = () => {
-	const backgroundColor = fade(useColor("error.200"), 0.15);
-
-	return (
-		<Flex
-			p={4}
-			align="center"
-			border="2px"
-			borderColor="error.600"
-			backgroundColor={backgroundColor}
-		>
-			<Box pr={2} color="error.600" fontSize="xl">
-				<RiErrorWarningFill />
-			</Box>
-			<Text as="span" fontSize="sm" fontWeight={500}>
-				Please enter at least 2 valid options for your poll.
-			</Text>
-		</Flex>
 	);
 };
 
