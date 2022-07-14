@@ -3,7 +3,7 @@
     "trailingSlash": false,
     "headers": [
       {
-        "source": "/fonts/inter.woff2",
+        "source": "/fonts/Inter.woff2",
         "headers": [
           {
             "key": "Cache-Control",
