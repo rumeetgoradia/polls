@@ -1,4 +1,3 @@
-import { PollHeader } from "@/components/PollPage/PollHeader";
 import { useColor } from "@/hooks/useColor";
 import { createTransition } from "@/utils/transition";
 import { Box, Button, Flex, HStack, Text, VStack } from "@chakra-ui/react";
@@ -7,6 +6,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { MdKeyboardBackspace } from "react-icons/md";
 import { PollWithUser } from "types/db";
+import { Header } from "../atoms/Header";
 import { ShareButton } from "../atoms/ShareButton";
 
 type PollResultsProps = {
@@ -79,7 +79,7 @@ const PollResults: React.FC<PollResultsProps> = ({
 
 	return (
 		<VStack spacing={8} align="flex-start">
-			<PollHeader
+			<Header
 				title={title}
 				createdAt={createdAt}
 				isOwner={isOwner}

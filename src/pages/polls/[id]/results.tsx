@@ -1,6 +1,7 @@
 import { FullPageSpinner } from "@/components/FullPageSpinner";
 import { Layout } from "@/components/Layout";
-import { PollResults } from "@/components/PollPage";
+import { PollResults } from "@/components/Poll/Content";
+
 import { trpc } from "@/utils/trpc";
 import { NextPage } from "next";
 import { useRouter } from "next/router";

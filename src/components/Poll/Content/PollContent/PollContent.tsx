@@ -19,8 +19,8 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { BsPieChart } from "react-icons/bs";
 import { PollWithUserAndOptions } from "types/db";
+import { Header } from "../atoms/Header";
 import { ShareButton } from "../atoms/ShareButton";
-import { PollHeader } from "../PollHeader";
 import { EndsAtBox } from "./EndsAtBox";
 import { SuccessDialog } from "./SuccessDialog";
 
@@ -149,7 +149,7 @@ const PollContent: React.FC<PollContentProps> = ({
 	return (
 		<>
 			<VStack spacing={8} align="flex-start">
-				<PollHeader
+				<Header
 					title={title}
 					createdAt={createdAt}
 					isOwner={isOwner}

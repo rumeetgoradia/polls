@@ -9,7 +9,7 @@ type PollHeaderProps = {
 	editedAt?: Date;
 };
 
-const PollHeader: React.FC<PollHeaderProps> = ({
+const Header: React.FC<PollHeaderProps> = ({
 	createdAt,
 	isOwner,
 	title,
@@ -59,4 +59,4 @@ const PollHeader: React.FC<PollHeaderProps> = ({
 	);
 };
 
-export default PollHeader;
+export default Header;
