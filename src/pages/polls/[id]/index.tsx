@@ -21,7 +21,7 @@ const PollPage: NextPage = () => {
 	const getPageTitle = () => {
 		if (isLoading) return "Loading...";
 		if (error || !data || !data.poll) return "404";
-		if (data.poll) return `${data.poll.title} — Results`;
+		if (data.poll) return `${data.poll.title}`;
 	};
 
 	return (

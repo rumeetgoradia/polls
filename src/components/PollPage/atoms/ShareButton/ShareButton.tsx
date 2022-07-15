@@ -7,9 +7,14 @@ import { BsShare } from "react-icons/bs";
 type ShareButtonProps = {
 	pollId: string;
 	colorScheme: "brandAlpha" | "grayAlpha";
+	onClick?: () => void;
 };
 
-const ShareButton: React.FC<ShareButtonProps> = ({ pollId, colorScheme }) => {
+const ShareButton: React.FC<ShareButtonProps> = ({
+	pollId,
+	colorScheme,
+	onClick,
+}) => {
 	const toast = useToast();
 
 	return (
@@ -26,6 +31,7 @@ const ShareButton: React.FC<ShareButtonProps> = ({ pollId, colorScheme }) => {
 			}}
 		>
 			<Button
+				onClick={onClick}
 				w="full"
 				colorScheme={colorScheme}
 				leftIcon={<BsShare />}
