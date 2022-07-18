@@ -80,6 +80,7 @@ const PollResults: React.FC<PollResultsProps> = ({
 	return (
 		<VStack spacing={8} align="flex-start">
 			<Header
+				id={pollId}
 				title={title}
 				createdAt={createdAt}
 				isOwner={isOwner}

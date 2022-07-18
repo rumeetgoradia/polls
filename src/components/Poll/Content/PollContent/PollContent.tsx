@@ -150,6 +150,7 @@ const PollContent: React.FC<PollContentProps> = ({
 		<>
 			<VStack spacing={8} align="flex-start">
 				<Header
+					id={pollId}
 					title={title}
 					createdAt={createdAt}
 					isOwner={isOwner}
@@ -191,7 +192,6 @@ const PollContent: React.FC<PollContentProps> = ({
 				<Grid templateColumns="repeat(4, 1fr)" w="full" gap={4}>
 					<GridItem colSpan={resultsAreVisible ? 2 : 3}>
 						<Tooltip
-							placement="top"
 							shouldWrapChildren
 							isDisabled={!(hasPollEnded() || selectedOptionsAreUnchanged())}
 							label={
@@ -201,7 +201,7 @@ const PollContent: React.FC<PollContentProps> = ({
 											selectedOptions.length > 1 ? "s are" : " is"
 									  } unchanged.`
 							}
-							mb="2px"
+							mt={3}
 						>
 							<Button
 								onClick={castVote}
