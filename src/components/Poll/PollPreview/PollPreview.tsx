@@ -13,6 +13,7 @@ type PollPreviewProps = {
 const PollPreview: React.FC<PollPreviewProps> = ({ poll }) => {
 	const { session } = useContext(SessionContext);
 
+	const [formattedCreatedAt, setFormattedCreatedAt] = useState<string>();
 	const [isOwned, setIsOwned] = useState<boolean>(false);
 
 	useEffect(() => {
@@ -22,6 +23,10 @@ const PollPreview: React.FC<PollPreviewProps> = ({ poll }) => {
 			setIsOwned(false);
 		}
 	}, [session, poll]);
+
+	useEffect(() => {
+		setFormattedCreatedAt(getApproximateTimeBetween(poll.createdAt));
+	}, [poll.createdAt]);
 
 	return (
 		<Link href={`/polls/${poll.id}`} passHref>
@@ -55,7 +60,7 @@ const PollPreview: React.FC<PollPreviewProps> = ({ poll }) => {
 						) : (
 							poll.User.name
 						)}{" "}
-						&middot; {getApproximateTimeBetween(poll.createdAt)} ago
+						&middot; {formattedCreatedAt} ago
 					</Text>
 					{/* <Text fontSize="sm" textAlign="right" opacity={0.65}>
 						{getApproximateTimeBetween(poll.createdAt)} ago

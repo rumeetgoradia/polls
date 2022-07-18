@@ -32,11 +32,12 @@ type PollContentProps = {
 };
 
 const PollContent: React.FC<PollContentProps> = ({
-	poll,
+	poll: initialPoll,
 	isOwner,
 	votesByCurrentUser: initialVotesByCurrentUser,
 	resultsAreVisible: initialResultsAreVisible,
 }) => {
+	const [poll, setPoll] = useState<PollWithUserAndOptions>(initialPoll);
 	const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
 	const [votesByCurrentUser, setVotesByCurrentUser] = useState<string[]>();
 	const [resultsAreVisible, setResultsAreVisible] = useState<
@@ -61,6 +62,10 @@ const PollContent: React.FC<PollContentProps> = ({
 	useEffect(() => {
 		setResultsAreVisible(initialResultsAreVisible);
 	}, [initialResultsAreVisible]);
+
+	useEffect(() => {
+		setPoll(initialPoll);
+	}, [initialPoll]);
 
 	const {
 		createdAt,
