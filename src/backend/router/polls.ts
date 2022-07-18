@@ -134,4 +134,100 @@ export const pollsRouter = createRouter()
 				},
 			});
 		},
+	})
+	.mutation("edit", {
+		input: pollFieldsValidator.and(z.object({ id: z.string() })),
+		async resolve({ input, ctx }) {
+			if (!ctx.token) {
+				throw new TRPCError({ code: "UNAUTHORIZED" });
+			}
+
+			const poll = await prisma.poll.findUnique({
+				where: {
+					id: input.id,
+				},
+				include: {
+					User: {
+						select: {
+							name: true,
+						},
+					},
+					options: {
+						select: {
+							id: true,
+							title: true,
+						},
+					},
+				},
+			});
+
+			if (!poll) {
+				throw new TRPCError({ code: "NOT_FOUND" });
+			}
+
+			if (ctx.token !== poll.userId) {
+				throw new TRPCError({ code: "UNAUTHORIZED" });
+			}
+
+			const existingOptions = await prisma.option.findMany({
+				where: {
+					pollId: poll.id,
+				},
+			});
+
+			// All input options without an ID or with an ID that doesn't already exist
+			const optionsToCreate = input.options.filter(
+				(option) =>
+					!option.id ||
+					!existingOptions.some(
+						(existingOption) => existingOption.id === option.id
+					)
+			);
+			// All existing options that aren't in the input options
+			const optionsToDelete = existingOptions.filter(
+				(existingOption) =>
+					!input.options.some((option) => option.id === existingOption.id)
+			);
+			// All input options with a matching existing option ID but differing existing option title
+			const optionsToUpdate = input.options.filter((option) =>
+				existingOptions.some(
+					(existingOption) =>
+						existingOption.id === option.id &&
+						existingOption.title !== option.title
+				)
+			);
+			console.log(optionsToCreate, optionsToDelete, optionsToUpdate);
+
+			await prisma.poll.update({
+				where: {
+					id: input.id,
+				},
+				data: {
+					...input,
+					options: {
+						createMany: {
+							data: [...optionsToCreate],
+						},
+						deleteMany: {
+							id: {
+								in: optionsToDelete.map((option) => option.id!),
+							},
+						},
+					},
+				},
+			});
+
+			for (const option of optionsToUpdate) {
+				await prisma.option.update({
+					where: {
+						id: option.id,
+					},
+					data: {
+						...option,
+					},
+				});
+			}
+
+			return { id: poll.id };
+		},
 	});

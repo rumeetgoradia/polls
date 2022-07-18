@@ -18,6 +18,7 @@ export const pollFieldsValidator = z.object({
 	options: z.array(
 		z.object({
 			title: z.string(),
+			id: z.string().optional(),
 		})
 	),
 	isPublic: z.boolean(),

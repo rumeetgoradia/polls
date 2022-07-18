@@ -1,6 +1,6 @@
 import { FullPageSpinner } from "@/components/FullPageSpinner";
 import { Layout } from "@/components/Layout";
-import { PollContent } from "@/components/PollPage";
+import { PollContent } from "@/components/Poll/Content/PollContent";
 import { trpc } from "@/utils/trpc";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
@@ -21,7 +21,7 @@ const PollPage: NextPage = () => {
 	const getPageTitle = () => {
 		if (isLoading) return "Loading...";
 		if (error || !data || !data.poll) return "404";
-		if (data.poll) return `${data.poll.title} — Results`;
+		if (data.poll) return `${data.poll.title}`;
 	};
 
 	return (

@@ -43,7 +43,7 @@ const CreatePollForm: React.FC<CreatePollFormProps> = ({}) => {
 const ActionButtons: React.FC<{ isLoading: boolean }> = ({ isLoading }) => {
 	return (
 		<Flex justify="end">
-			<Button type="submit" isLoading={isLoading}>
+			<Button type="submit" isLoading={isLoading} w="141px">
 				Create poll
 			</Button>
 		</Flex>

@@ -1,6 +1,7 @@
 import {
 	AlertDialog,
 	AlertDialogBody,
+	AlertDialogCloseButton,
 	AlertDialogContent,
 	AlertDialogFooter,
 	AlertDialogHeader,
@@ -10,7 +11,6 @@ import {
 	Grid,
 	GridItem,
 	Heading,
-	useToast,
 } from "@chakra-ui/react";
 import Link from "next/link";
 import { useRef } from "react";
@@ -33,8 +33,6 @@ const SuccessDialog: React.FC<SuccessDialogProps> = ({
 }) => {
 	const closeDialogRef = useRef<HTMLButtonElement>(null);
 
-	const toast = useToast();
-
 	return (
 		<AlertDialog
 			isOpen={isOpen}
@@ -44,7 +42,7 @@ const SuccessDialog: React.FC<SuccessDialogProps> = ({
 			isCentered
 		>
 			<AlertDialogOverlay>
-				<AlertDialogContent bg="gray.900">
+				<AlertDialogContent bg="gray.900" m={4} position="relative">
 					<AlertDialogHeader>
 						<Flex align="center">
 							<Flex
@@ -52,19 +50,27 @@ const SuccessDialog: React.FC<SuccessDialogProps> = ({
 								align="center"
 								color="white"
 								bg="brand.900"
-								mr={4}
-								fontSize="2xl"
+								mr={{ base: 2, sm: 4 }}
+								fontSize={{ base: "lg", sm: "2xl" }}
 								borderRadius="50%"
 								p={1}
 							>
 								<AiOutlineCheck />
 							</Flex>
-							<Heading as="h4" fontWeight={500} fontSize="2xl" lineHeight={1}>
+							<Heading
+								as="h4"
+								fontWeight={500}
+								fontSize={{ base: "xl", sm: "2xl" }}
+								lineHeight={1}
+							>
 								Your vote has been cast!
 							</Heading>
 						</Flex>
+						<AlertDialogCloseButton
+							ref={closeDialogRef}
+							display={{ base: "none", sm: "block" }}
+						/>
 					</AlertDialogHeader>
-
 					<AlertDialogBody>
 						Thanks for voting on this poll.{" "}
 						{`${
@@ -94,6 +100,7 @@ const SuccessDialog: React.FC<SuccessDialogProps> = ({
 								<ShareButton
 									pollId={pollId}
 									colorScheme={resultsAreVisible ? "grayAlpha" : "brandAlpha"}
+									onClick={onClose}
 								/>
 							</GridItem>
 						</Grid>

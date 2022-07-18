@@ -29,10 +29,12 @@ export const usersRouter = createRouter().mutation("merge-guest-account", {
 			},
 		});
 
-		return await prisma.user.delete({
-			where: {
-				id: guestId,
-			},
-		});
+		try {
+			await prisma.user.delete({
+				where: {
+					id: guestId,
+				},
+			});
+		} catch (e) {}
 	},
 });

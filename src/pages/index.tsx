@@ -1,5 +1,6 @@
 import { Layout } from "@/components/Layout";
-import { PollPreview } from "@/components/PollPreview";
+import { PollPreview } from "@/components/Poll/PollPreview";
+
 import { trpc } from "@/utils/trpc";
 import {
 	Box,

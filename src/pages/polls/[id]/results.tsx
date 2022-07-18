@@ -1,6 +1,7 @@
 import { FullPageSpinner } from "@/components/FullPageSpinner";
 import { Layout } from "@/components/Layout";
-import { PollResults } from "@/components/PollPage";
+import { PollResults } from "@/components/Poll/Content";
+
 import { trpc } from "@/utils/trpc";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
@@ -23,6 +24,7 @@ const ResultsPage: NextPage = () => {
 
 	const getPageTitle = () => {
 		if (isLoading) return "Loading...";
+		// TODO if error is unauthorized, then return results are not visible page
 		if (error || !data || !data.poll) return "404";
 		if (data.poll) return `${data.poll.title} — Results`;
 	};

@@ -19,8 +19,8 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { BsPieChart } from "react-icons/bs";
 import { PollWithUserAndOptions } from "types/db";
+import { Header } from "../atoms/Header";
 import { ShareButton } from "../atoms/ShareButton";
-import { PollHeader } from "../PollHeader";
 import { EndsAtBox } from "./EndsAtBox";
 import { SuccessDialog } from "./SuccessDialog";
 
@@ -32,11 +32,12 @@ type PollContentProps = {
 };
 
 const PollContent: React.FC<PollContentProps> = ({
-	poll,
+	poll: initialPoll,
 	isOwner,
 	votesByCurrentUser: initialVotesByCurrentUser,
 	resultsAreVisible: initialResultsAreVisible,
 }) => {
+	const [poll, setPoll] = useState<PollWithUserAndOptions>(initialPoll);
 	const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
 	const [votesByCurrentUser, setVotesByCurrentUser] = useState<string[]>();
 	const [resultsAreVisible, setResultsAreVisible] = useState<
@@ -61,6 +62,10 @@ const PollContent: React.FC<PollContentProps> = ({
 	useEffect(() => {
 		setResultsAreVisible(initialResultsAreVisible);
 	}, [initialResultsAreVisible]);
+
+	useEffect(() => {
+		setPoll(initialPoll);
+	}, [initialPoll]);
 
 	const {
 		createdAt,
@@ -149,7 +154,8 @@ const PollContent: React.FC<PollContentProps> = ({
 	return (
 		<>
 			<VStack spacing={8} align="flex-start">
-				<PollHeader
+				<Header
+					id={pollId}
 					title={title}
 					createdAt={createdAt}
 					isOwner={isOwner}
@@ -191,7 +197,6 @@ const PollContent: React.FC<PollContentProps> = ({
 				<Grid templateColumns="repeat(4, 1fr)" w="full" gap={4}>
 					<GridItem colSpan={resultsAreVisible ? 2 : 3}>
 						<Tooltip
-							placement="top"
 							shouldWrapChildren
 							isDisabled={!(hasPollEnded() || selectedOptionsAreUnchanged())}
 							label={
@@ -201,7 +206,7 @@ const PollContent: React.FC<PollContentProps> = ({
 											selectedOptions.length > 1 ? "s are" : " is"
 									  } unchanged.`
 							}
-							mb="2px"
+							mt={3}
 						>
 							<Button
 								onClick={castVote}

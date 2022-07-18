@@ -1,5 +1,5 @@
-import { CopiedToast } from "@/components/PollPage/atoms/CopiedToast";
-import { COPIED_TOAST_ID } from "@/components/PollPage/atoms/CopiedToast/CopiedToast";
+import { CopiedToast } from "@/components/Poll/Content/atoms/CopiedToast";
+import { COPIED_TOAST_ID } from "@/components/Poll/Content/atoms/CopiedToast/CopiedToast";
 import { SITE_URL } from "@/constants/seo";
 import { Button, useToast } from "@chakra-ui/react";
 import { CopyToClipboard } from "react-copy-to-clipboard";
@@ -7,9 +7,14 @@ import { BsShare } from "react-icons/bs";
 type ShareButtonProps = {
 	pollId: string;
 	colorScheme: "brandAlpha" | "grayAlpha";
+	onClick?: () => void;
 };
 
-const ShareButton: React.FC<ShareButtonProps> = ({ pollId, colorScheme }) => {
+const ShareButton: React.FC<ShareButtonProps> = ({
+	pollId,
+	colorScheme,
+	onClick,
+}) => {
 	const toast = useToast();
 
 	return (
@@ -26,6 +31,7 @@ const ShareButton: React.FC<ShareButtonProps> = ({ pollId, colorScheme }) => {
 			}}
 		>
 			<Button
+				onClick={onClick}
 				w="full"
 				colorScheme={colorScheme}
 				leftIcon={<BsShare />}
