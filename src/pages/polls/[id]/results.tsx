@@ -24,6 +24,7 @@ const ResultsPage: NextPage = () => {
 
 	const getPageTitle = () => {
 		if (isLoading) return "Loading...";
+		// TODO if error is unauthorized, then return results are not visible page
 		if (error || !data || !data.poll) return "404";
 		if (data.poll) return `${data.poll.title} — Results`;
 	};
