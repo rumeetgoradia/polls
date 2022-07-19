@@ -27,8 +27,8 @@ const HomePage: NextPage = () => {
 					<VStack
 						w="full"
 						maxW="500px"
-						px={12}
-						py={14}
+						px={{ base: 8, sm: 12 }}
+						py={{ base: 8, sm: 14 }}
 						align="flex-start"
 						spacing={6}
 						position="relative"
@@ -97,10 +97,10 @@ const PublicPollsList: React.FC<{
 		);
 	}
 
-	if (!polls) {
+	if (!polls || !polls.length) {
 		return (
 			<Text fontSize="xl" opacity={0.65}>
-				No public polls! You should create the first one ;)
+				No public polls! You should create the first one :)
 			</Text>
 		);
 	}
