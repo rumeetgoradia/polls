@@ -7,6 +7,7 @@ import {
 	Button,
 	Flex,
 	Heading,
+	Link as ChakraLink,
 	Spinner,
 	Text,
 	VStack,
@@ -100,7 +101,11 @@ const PublicPollsList: React.FC<{
 	if (!polls || !polls.length) {
 		return (
 			<Text fontSize="xl" opacity={0.65}>
-				No public polls! You should create the first one :)
+				No public polls! You should{" "}
+				<Link href="/create" passHref>
+					<ChakraLink color="brand.900">create one</ChakraLink>
+				</Link>{" "}
+				:)
 			</Text>
 		);
 	}

@@ -7,6 +7,7 @@ import {
 	PopoverContent,
 	PopoverTrigger,
 	Text,
+	useDisclosure,
 } from "@chakra-ui/react";
 import { signOut } from "next-auth/react";
 import Link from "next/link";
@@ -33,10 +34,18 @@ const ACCOUNT_POPOVER_LINKS: AccountPopoverLink[] = [
 ];
 
 const AccountPopover: React.FC = () => {
+	const { isOpen, onToggle, onClose } = useDisclosure();
+
 	return (
-		<Popover placement="bottom-end">
+		<Popover
+			returnFocusOnClose={false}
+			isOpen={isOpen}
+			onClose={onClose}
+			placement="bottom-end"
+		>
 			<PopoverTrigger>
 				<IconButton
+					onClick={onToggle}
 					icon={<BsPerson />}
 					aria-label="Your account"
 					colorScheme="grayAlpha"
@@ -58,7 +67,7 @@ const AccountPopover: React.FC = () => {
 					if (path) {
 						return (
 							<Link href={path} passHref key={`${title}-popover-link`}>
-								<a>
+								<a onClick={onClose}>
 									<AccountPopoverItem title={title} icon={icon} />
 								</a>
 							</Link>
@@ -67,7 +76,10 @@ const AccountPopover: React.FC = () => {
 						return (
 							<Box
 								w="full"
-								onClick={() => signOut()}
+								onClick={() => {
+									signOut();
+									onClose();
+								}}
 								key={`${title}-popover-link`}
 							>
 								<AccountPopoverItem title={title} icon={icon} />

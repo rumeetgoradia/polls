@@ -69,11 +69,6 @@ const NavButtons: React.FC = () => {
 
 	return (
 		<HStack spacing={{ base: 2, sm: 4 }}>
-			{/* {status !== "authenticated" && (
-				<Flex w="52px" justify="center">
-					<Spinner size="sm" />
-				</Flex>
-			)} */}
 			{session?.isGuest && status === "authenticated" && (
 				<Button
 					onClick={() => signIn(session?.user?.id)}
