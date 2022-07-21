@@ -7,12 +7,12 @@ import {
 	Flex,
 	HStack,
 	Link as Anchor,
-	Spinner,
 } from "@chakra-ui/react";
 import fade from "color-alpha";
 import Link from "next/link";
 import { useContext } from "react";
 import { AiOutlinePlus } from "react-icons/ai";
+import { AccountPopover } from "./AccountPopover";
 
 type NavbarProps = {};
 
@@ -45,7 +45,7 @@ const Navbar: React.FC<NavbarProps> = ({}) => {
 						<Anchor
 							fontWeight={300}
 							title="rgPolls"
-							fontSize="4xl"
+							fontSize={{ base: "3xl", sm: "4xl" }}
 							textDecoration="none !important"
 							_hover={{ transform: "scale(1.025)" }}
 							_focusVisible={{ transform: "scale(1.025)" }}
@@ -57,44 +57,39 @@ const Navbar: React.FC<NavbarProps> = ({}) => {
 							Polls
 						</Anchor>
 					</Link>
-					<HStack spacing={4}>
-						<SessionManagementButton />
-						<Link href="/create" passHref>
-							<Button as="a" leftIcon={<AiOutlinePlus />} title="Create a poll">
-								Create a poll
-							</Button>
-						</Link>
-					</HStack>
+					<NavButtons />
 				</Flex>
 			</Container>
 		</Flex>
 	);
 };
 
-const SessionManagementButton: React.FC = () => {
+const NavButtons: React.FC = () => {
 	const { session, signIn, signOut, status } = useContext(SessionContext);
 
-	if (status !== "authenticated") {
-		return (
-			<Flex w="52px" justify="center">
-				<Spinner size="sm" />
-			</Flex>
-		);
-	}
-
-	if (session?.isGuest) {
-		return (
-			<Button onClick={() => signIn(session?.user?.id)} variant="link">
-				Sign In
-			</Button>
-		);
-	}
-
-	// TODO make better
 	return (
-		<Button variant="link" onClick={() => signOut()}>
-			Sign Out
-		</Button>
+		<HStack spacing={{ base: 2, sm: 4 }}>
+			{session?.isGuest && status === "authenticated" && (
+				<Button
+					onClick={() => signIn(session?.user?.id)}
+					variant="link"
+					size={{ base: "sm", sm: "md" }}
+				>
+					Sign In
+				</Button>
+			)}
+			<Link href="/create" passHref>
+				<Button
+					as="a"
+					leftIcon={<AiOutlinePlus />}
+					title="Create a poll"
+					size={{ base: "sm", sm: "md" }}
+				>
+					Create a poll
+				</Button>
+			</Link>
+			{!session?.isGuest && status === "authenticated" && <AccountPopover />}
+		</HStack>
 	);
 };
 

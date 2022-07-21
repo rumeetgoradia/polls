@@ -2,15 +2,19 @@ import { SessionContext } from "@/context/session";
 import { getApproximateTimeBetween } from "@/utils/date";
 import { createTransition } from "@/utils/transition";
 import { Box, Flex, Text } from "@chakra-ui/react";
+import { Poll } from "@prisma/client";
 import Link from "next/link";
 import { useContext, useEffect, useState } from "react";
 import { PollWithUser } from "types/db";
 
-type PollPreviewProps = {
-	poll: PollWithUser;
-};
+type PollPreviewProps =
+	| {
+			poll: PollWithUser;
+			showUser?: true;
+	  }
+	| { poll: Poll; showUser: false };
 
-const PollPreview: React.FC<PollPreviewProps> = ({ poll }) => {
+const PollPreview: React.FC<PollPreviewProps> = ({ poll, showUser }) => {
 	const { session } = useContext(SessionContext);
 
 	const [formattedCreatedAt, setFormattedCreatedAt] = useState<string>();
@@ -47,20 +51,25 @@ const PollPreview: React.FC<PollPreviewProps> = ({ poll }) => {
 				</Text>
 				<Flex flexDirection="column" align="flex-end" mt={2} w="full">
 					<Text fontSize="sm" textAlign="right" opacity={0.65} pl={4}>
-						by{" "}
-						{isOwned ? (
-							<Box
-								as="strong"
-								fontSize="xs"
-								textTransform="uppercase"
-								fontWeight={900}
-							>
-								You
-							</Box>
-						) : (
-							poll.User.name
-						)}{" "}
-						&middot; {formattedCreatedAt} ago
+						{showUser && (
+							<>
+								by{" "}
+								{isOwned ? (
+									<Box
+										as="strong"
+										fontSize="xs"
+										textTransform="uppercase"
+										fontWeight={900}
+									>
+										You
+									</Box>
+								) : (
+									poll.User.name
+								)}{" "}
+								&middot;{" "}
+							</>
+						)}
+						{formattedCreatedAt} ago
 					</Text>
 					{/* <Text fontSize="sm" textAlign="right" opacity={0.65}>
 						{getApproximateTimeBetween(poll.createdAt)} ago

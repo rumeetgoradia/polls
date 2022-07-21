@@ -29,7 +29,9 @@ export const pollsRouter = createRouter()
 	.query("get-all-owned", {
 		async resolve({ ctx }) {
 			if (!ctx.token) {
-				return [];
+				throw new TRPCError({
+					code: "UNAUTHORIZED",
+				});
 			}
 
 			return await prisma.poll.findMany({

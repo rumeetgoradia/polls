@@ -4,6 +4,7 @@ export const Button: ComponentStyleConfig = {
 	// style object for base or default style
 	baseStyle: {
 		fontWeight: 400,
+		lineHeight: 1,
 	},
 	// styles for different sizes ("sm", "md", "lg")
 	sizes: {},
@@ -28,6 +29,7 @@ export const Button: ComponentStyleConfig = {
 		link: {
 			color: "white",
 			textDecoration: "none !important",
+			lineHeight: 1,
 			_hover: {
 				color: "brand.900",
 			},
