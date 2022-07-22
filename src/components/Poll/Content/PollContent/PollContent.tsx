@@ -162,7 +162,7 @@ const PollContent: React.FC<PollContentProps> = ({
 					user={User.name!}
 					editedAt={editedAt!}
 				/>
-				<Text>{description}</Text>
+				{!!description && <Text>{description}</Text>}
 				<VStack spacing={2} align="flex-start" w="full">
 					{options.map(({ title: optionTitle, id: optionId }) => {
 						const isSelected = selectedOptions.includes(optionId);

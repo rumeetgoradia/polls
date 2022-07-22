@@ -1,6 +1,5 @@
 import { CopiedToast } from "@/components/Poll/Content/atoms/CopiedToast";
 import { COPIED_TOAST_ID } from "@/components/Poll/Content/atoms/CopiedToast/CopiedToast";
-import { SITE_URL } from "@/constants/seo";
 import { Button, useToast } from "@chakra-ui/react";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { BsShare } from "react-icons/bs";
@@ -19,7 +18,7 @@ const ShareButton: React.FC<ShareButtonProps> = ({
 
 	return (
 		<CopyToClipboard
-			text={`${SITE_URL}/polls/${pollId}`}
+			text={`${window.location.origin}/polls/${pollId}`}
 			onCopy={() => {
 				if (!toast.isActive(COPIED_TOAST_ID)) {
 					toast({
