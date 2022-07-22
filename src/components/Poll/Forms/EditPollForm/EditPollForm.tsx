@@ -17,8 +17,8 @@ const EditPollForm: React.FC<EditPollFormProps> = ({ poll }) => {
 		resolver: zodResolver(pollFieldsValidator),
 		defaultValues: {
 			...poll,
-			description: poll.description!,
-			endsAt: poll.endsAt!,
+			description: poll.description || undefined,
+			endsAt: poll.endsAt || undefined,
 		},
 	});
 

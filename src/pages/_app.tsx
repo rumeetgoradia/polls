@@ -17,15 +17,15 @@ const MyApp: AppType = ({
 }) => {
 	return (
 		<SessionProvider session={session}>
-			<SessionContextProvider>
-				<DefaultSeo {...SeoProps} />
-				<Chakra cookies={pageProps.cookies} theme={theme}>
-					<Fonts />
+			<DefaultSeo {...SeoProps} />
+			<Chakra cookies={pageProps.cookies} theme={theme}>
+				<Fonts />
+				<SessionContextProvider>
 					<Navbar />
 					<Component {...pageProps} />
 					<Footer />
-				</Chakra>
-			</SessionContextProvider>
+				</SessionContextProvider>
+			</Chakra>
 		</SessionProvider>
 	);
 };
